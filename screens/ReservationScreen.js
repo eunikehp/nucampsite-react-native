@@ -4,11 +4,11 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ReservationScreen = () => {
-    //Event Handler Function
     const [campers, setCampers] = useState(1);
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
+
     const onDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShowCalendar(Platform.OS === 'ios');
@@ -16,22 +16,19 @@ const ReservationScreen = () => {
     };
 
     const handleReservation = () => {
-        console.log({ campers });
-        console.log({ hikeIn });
-        console.log({ date });
-        //set the variables back to their initial values
+        console.log('campers:', campers);
+        console.log('hikeIn:', hikeIn);
+        console.log('date:', date);
         setCampers(1);
         setHikeIn(false);
         setDate(new Date());
         setShowCalendar(false);
-    }
+    };
 
     return (
         <ScrollView>
             <View style={styles.formRow}>
-                <Text style={styles.formLabel}>
-                    Number of Campers:
-                </Text>
+                <Text style={styles.formLabel}>Number of Campers:</Text>
                 <Picker
                     style={styles.formItem}
                     selectedValue={campers}
@@ -46,9 +43,7 @@ const ReservationScreen = () => {
                 </Picker>
             </View>
             <View style={styles.formRow}>
-                <Text style={styles.formLabel}>
-                    HikeIn?
-                </Text>
+                <Text style={styles.formLabel}>Hike In?</Text>
                 <Switch
                     style={styles.formItem}
                     value={hikeIn}
@@ -57,9 +52,7 @@ const ReservationScreen = () => {
                 />
             </View>
             <View style={styles.formRow}>
-                <Text style={styles.formLabel}>
-                    Date:
-                </Text>
+                <Text style={styles.formLabel}>Date:</Text>
                 <Button
                     onPress={() => setShowCalendar(!showCalendar)}
                     title={date.toLocaleDateString('en-US')}
@@ -76,7 +69,6 @@ const ReservationScreen = () => {
                     onChange={onDateChange}
                 />
             )}
-
             <View style={styles.formRow}>
                 <Button
                     onPress={() => handleReservation()}
@@ -86,9 +78,8 @@ const ReservationScreen = () => {
                 />
             </View>
         </ScrollView>
-
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     formRow: {

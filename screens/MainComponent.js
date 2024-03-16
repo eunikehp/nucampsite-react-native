@@ -75,7 +75,7 @@ const ReservationNavigator = () => {
         <Stack.Navigator screenOptions={screenOptions}>
             <Stack.Screen
                 name='Reservation'
-                component={ReservationScreenScreen}
+                component={ReservationScreen}
                 options={({ navigation }) => ({
                     title: 'Reservation Search',
                     headerLeft: () => (
@@ -222,6 +222,22 @@ const Main = () => {
                     }}
                 />
                 <Drawer.Screen
+                    name='Reserve Campsite'
+                    component={ReservationNavigator}
+                    options={{
+                        title: 'Reserve Campsite',
+                        drawerIcon: ({ color }) => (
+                            <Icon
+                                name='tree'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen
                     name='About'
                     component={AboutNavigator}
                     options={{
@@ -253,22 +269,7 @@ const Main = () => {
                         )
                     }}
                 />
-                <Drawer.Screen
-                    name='Reserve Campsite'
-                    component={ReservationNavigator}
-                    options={{
-                        title: 'Reserve Campsite',
-                        drawerIcon: ({ color }) => (
-                            <Icon
-                                name='tree'
-                                type='font-awesome'
-                                size={24}
-                                iconStyle={{ width: 24 }}
-                                color={color}
-                            />
-                        )
-                    }}
-                />
+                
             </Drawer.Navigator>
         </View>
     );
