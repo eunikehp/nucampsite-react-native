@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, Text, View, Modal} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
 import { Input, Rating, Button } from 'react-native-elements';
+import { postComment } from '../features/comments/commentsSlice';
 
 const CampsiteInfoScreen = ({ route }) => {
     const { campsite } = route.params;
@@ -28,7 +29,7 @@ const CampsiteInfoScreen = ({ route }) => {
             text,
             campsiteId: campsite.id
         };
-        console.log({newComment});
+        dispatch(postComment(newComment))
         setShowModal(!showModal);
     }
 
@@ -99,14 +100,14 @@ const CampsiteInfoScreen = ({ route }) => {
                         placeholder='Author'
                         leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                         leftIconContainerStyle={{paddingRight:10}}
-                        onChangeText={(rating)=> setRating(rating)}
+                        onChangeText={(author)=> setAuthor(author)}
                         value={author}
                     />
                     <Input
                         placeholder='Comment'
                         leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
                         leftIconContainerStyle={{paddingRight:10}}
-                        onChangeText={(rating)=> setRating(rating)}
+                        onChangeText={(text)=> setText(text)}
                         value={text}
                     />
                     <View style={{ margin: 10 }}>
