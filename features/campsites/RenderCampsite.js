@@ -1,6 +1,6 @@
-import { Text, View, StyleSheet} from "react-native";
+import { StyleSheet, Text, View } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
-import { baseUrl } from "../../shared/baseUrl";
+import { baseUrl } from '../../shared/baseUrl';
 
 const RenderCampsite = (props) => {
     const { campsite } = props;
@@ -18,27 +18,26 @@ const RenderCampsite = (props) => {
                         >
                             {campsite.name}
                         </Text>
-                        <Icon
-                            name={props.isFavorite ? 'heart' : 'heart-o'}
-                            type='font-awesome'
-                            color='#f50'
-                            raised
-                            reverse
-                            onPress={() =>
-                                props.isFavorite
-                                    ? console.log('Already set as a favorite')
-                                    : props.markFavorite()
-                            }
-                        />
                     </View>
                 </Card.Image>
-                <Text style={{ margin: 20 }}> {campsite.description}</Text>
+                <Text style={{ margin: 20 }}>{campsite.description}</Text>
+                <Icon
+                    name={props.isFavorite ? 'heart' : 'heart-o'}
+                    type='font-awesome'
+                    color='#f50'
+                    raised
+                    reverse
+                    onPress={() =>
+                        props.isFavorite
+                            ? console.log('Already set as a favorite')
+                            : props.markFavorite()
+                    }
+                />
             </Card>
         );
-
     }
     return <View />;
-}
+};
 
 const styles = StyleSheet.create({
     cardContainer: {
