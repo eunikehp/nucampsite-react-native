@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ReservationScreen = () => {
+    //Event Handler Function
     const [campers, setCampers] = useState(1);
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
@@ -17,13 +18,15 @@ const ReservationScreen = () => {
 
     const handleReservation = () => {
         console.log('campers:', campers);
-        console.log('hikeIn:', hikeIn);
-        console.log('date:', date);
+        console.log('hikeIn:',hikeIn );
+        console.log('date:', date );
+
+        //set the variables back to their initial values
         setCampers(1);
         setHikeIn(false);
         setDate(new Date());
         setShowCalendar(false);
-    };
+    }
 
     return (
         <ScrollView>
@@ -42,6 +45,7 @@ const ReservationScreen = () => {
                     <Picker.Item label='6' value={6} />
                 </Picker>
             </View>
+
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Hike In?</Text>
                 <Switch
@@ -69,6 +73,7 @@ const ReservationScreen = () => {
                     onChange={onDateChange}
                 />
             )}
+
             <View style={styles.formRow}>
                 <Button
                     onPress={() => handleReservation()}
@@ -78,8 +83,9 @@ const ReservationScreen = () => {
                 />
             </View>
         </ScrollView>
-    );
-};
+
+    )
+}
 
 const styles = StyleSheet.create({
     formRow: {

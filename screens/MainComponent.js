@@ -17,11 +17,69 @@ import { fetchPromotions } from '../features/promotions/promotionsSlice';
 import { fetchComments } from '../features/comments/commentsSlice';
 import ReservationScreen from './ReservationScreen';
 
+// NAVIGATOR 
 const Drawer = createDrawerNavigator();
 
 const screenOptions = {
     headerTintColor: '#fff',
     headerStyle: { backgroundColor: '#5637DD' }
+};
+
+const HomeNavigator = () => {
+    const Stack = createStackNavigator();
+    return (
+        <Stack.Navigator screenOptions={screenOptions}>
+            <Stack.Screen
+                name='Home'
+                component={HomeScreen}
+                options={({ navigation }) => ({
+                    title: 'Home',
+                    headerLeft: () => (
+                        <Icon
+                            name='home'
+                            type='font-awesome'
+                            iconStyle={styles.stackIcon}
+                            onPress={() => navigation.toggleDrawer()}
+                        />
+                    )
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const DirectoryNavigator = () => {
+    const Stack = createStackNavigator();
+    return (
+        <Stack.Navigator
+            initialRouteName='Directory'
+            screenOptions={screenOptions}
+        >
+            <Stack.Screen
+                name='Directory'
+                component={DirectoryScreen}
+                options={({ navigation }) => ({
+                    title: 'Campsite Directory',
+                    headerLeft: () => (
+                        <Icon
+                            name='list'
+                            type='font-awesome'
+                            iconStyle={styles.stackIcon}
+                            onPress={() => navigation.toggleDrawer()}
+                        />
+                    )
+                })}
+
+            />
+            <Stack.Screen
+                name='CampsiteInfo'
+                component={CampsiteInfoScreen}
+                options={({ route }) => ({
+                    title: route.params.campsite.name
+                })}
+            />
+        </Stack.Navigator>
+    );
 };
 
 const AboutNavigator = () => {
@@ -92,62 +150,9 @@ const ReservationNavigator = () => {
     );
 };
 
-const HomeNavigator = () => {
-    const Stack = createStackNavigator();
-    return (
-        <Stack.Navigator screenOptions={screenOptions}>
-            <Stack.Screen
-                name='Home'
-                component={HomeScreen}
-                options={({ navigation }) => ({
-                    title: 'Home',
-                    headerLeft: () => (
-                        <Icon
-                            name='home'
-                            type='font-awesome'
-                            iconStyle={styles.stackIcon}
-                            onPress={() => navigation.toggleDrawer()}
-                        />
-                    )
-                })}
-            />
-        </Stack.Navigator>
-    );
-};
 
-const DirectoryNavigator = () => {
-    const Stack = createStackNavigator();
-    return (
-        <Stack.Navigator
-            initialRouteName='Directory'
-            screenOptions={screenOptions}
-        >
-            <Stack.Screen
-                name='Directory'
-                component={DirectoryScreen}
-                options={({ navigation }) => ({
-                    title: 'Campsite Directory',
-                    headerLeft: () => (
-                        <Icon
-                            name='list'
-                            type='font-awesome'
-                            iconStyle={styles.stackIcon}
-                            onPress={() => navigation.toggleDrawer()}
-                        />
-                    )
-                })}
 
-            />
-            <Stack.Screen
-                name='CampsiteInfo'
-                component={CampsiteInfoScreen}
-                options={({ route }) => ({
-                    title: route.params.campsite.name
-                })}
-            />
-        </Stack.Navigator>
-    );
-};
+
 
 const CustomDrawerContent = (props) => {
     return (
