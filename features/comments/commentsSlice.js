@@ -20,7 +20,7 @@ export const postComment = createAsyncThunk(
     async (payload, { dispatch, getState }) => {
         setTimeout(() => {
             const { comments } = getState();
-            payload.date = new Date(Date.now()).toISOString()
+            payload.date = new Date().toISOString()
             payload.id = comments.commentsArray.length;
             dispatch(addComment(payload));
         }, 2000);
@@ -32,11 +32,7 @@ const commentsSlice = createSlice({
     initialState: { isLoading: true, errMess: null, commentsArray: [] },
     reducers: {
         addComment: (state, action) => {
-            const newComment= {
-                id: state.commentsArray.length +1,
-                ...action.payload
-            };
-            state.commentsArray.push(newComment);
+            state.commentsArray.push(action.payload);
         }
     },
     extraReducers: (builder) => {

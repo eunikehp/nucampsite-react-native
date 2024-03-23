@@ -24,7 +24,7 @@ const FavoritesScreen = ({ navigation }) => {
                         // onPress={() => dispatch(toggleFavorite(campsite.id))}
                         onPress={() => Alert.alert(
                             'Delete Favorite?',
-                            'Are you sure you wish to delete the favorite campsite' + campsite.name + '?',
+                            'Are you sure you wish to delete the favorite campsite ' + campsite.name + '?',
                             [
                                 {
                                     text: 'Cancel',
