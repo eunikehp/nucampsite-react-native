@@ -3,6 +3,7 @@ import { Text, View, ScrollView, StyleSheet, Switch, Button, Platform, Alert } f
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Animatable from 'react-native-animatable';
+import * as Notifications from 'expo-notifications';
 
 const ReservationScreen = () => {
     //Event Handler Function
@@ -29,11 +30,19 @@ const ReservationScreen = () => {
             [
                 {
                     text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed')
+                    style: 'cancel',
+                    onPress: () => {
+                        console.log('Reservation Search Canceled');
+                        resetForm();
+                    }
                 },
                 {
                     text: 'OK',
-                    onPress: () => console.log('OK')//to be done in the future exercise
+                    onPress: () => {
+                        console.log('OK')//to be done in the future exercise
+                        presentLocalNotification(date.toLocaleDateString('en-US'));
+                        resetForm();
+                    }
                 }
             ],
             {cancelable: false}
@@ -46,6 +55,33 @@ const ReservationScreen = () => {
         setHikeIn(false);
         setDate(new Date());
         setShowCalendar(false);
+    };
+
+    //Notif
+    const presentLocalNotification = async (reservationDate) => { 
+        const sendNotification = () => {
+            Notifications.setNotificationHandler({
+                handleNotification: async () => ({
+                    shouldShowAlert: true,
+                    shouldPlaySound: true,
+                    shouldSetBadge: true
+                })
+            })
+            Notifications.scheduleNotificationAsync({
+                content: {
+                    title: 'Your Campsite Reservation Search',
+                    body: `Search for ${reservationDate} requested`
+                },
+                trigger: null //setting the trigger to null will cause the notif to fire immediately, also can be used to schedule the notf in the future. 
+            })
+        };
+        let permissions = await Notifications.getPermissionsAsync();
+        if (!permissions.granted) {
+            permissions = await Notifications.requestPermissionsAsync();
+        }
+        if (permissions.granted) {
+            sendNotification();
+        }
     };
 
     return (
@@ -107,9 +143,7 @@ const ReservationScreen = () => {
                         accessibilityLabel='Tap me to search for available campsites to reserve'
                     />
                 </View>
-                <View>
 
-                </View>
                 {/* <Modal
                     animationType='slide'
                     transparent={false}

@@ -11,7 +11,7 @@ const RenderCampsite = (props) => {
     const view = useRef();
 
     //add gesture swipe right
-    const isRightSwipe= ({ dx }) => dx < +200;
+    const isRightSwipe= ({ dx }) => dx > 200;
 
     // add Gesture: swipeleft
     const isLeftSwipe = ({ dx }) => dx < -200;
@@ -33,6 +33,7 @@ const RenderCampsite = (props) => {
                     [
                         {
                             text: 'Cancel',
+                            style: 'cancel',
                             onPress: () => console.log('Cancel Pressed')
                         },
                         {
@@ -43,7 +44,7 @@ const RenderCampsite = (props) => {
                     {cancelable: false}
                 )
             }
-            if(isRightSwipe(gestureState)) {
+            else if(isRightSwipe(gestureState)) {
                 props.onShowModal()
             }
         }
