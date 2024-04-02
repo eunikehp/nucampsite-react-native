@@ -4,6 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import * as MailComposer from 'expo-mail-composer';
 
 const ContactScreen = () => {
+    //Sending Email
     const sendEmail = () => {
         MailComposer.composeAsync({
             recipients: ['campsites@nucamp.co'],
