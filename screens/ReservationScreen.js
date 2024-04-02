@@ -33,7 +33,7 @@ const ReservationScreen = () => {
                 },
                 {
                     text: 'OK',
-                    onPress: () => props.isFavorite ? console.log('Already set as a favorite') : props.markFavorite()
+                    onPress: () => console.log('OK')//to be done in the future exercise
                 }
             ],
             {cancelable: false}
