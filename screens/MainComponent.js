@@ -1,4 +1,4 @@
-import { Platform, View, StyleSheet, Text, Image } from 'react-native';
+import { Platform, View, StyleSheet, Text, Image, Alert, ToastAndroid } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Constants from 'expo-constants';
 import CampsiteInfoScreen from './CampsiteInfoScreen';
@@ -19,6 +19,7 @@ import { fetchComments } from '../features/comments/commentsSlice';
 import ReservationScreen from './ReservationScreen';
 import LoginScreen from './LoginScreen';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import NetInfo from '@react-native-community/netinfo';
 
 // NAVIGATOR 
 const Drawer = createDrawerNavigator();
@@ -219,7 +220,10 @@ const CustomDrawerContent = (props) => {
             <DrawerItemList {...props} labelStyle={{ fontWeight: 'bold' }} />
         </DrawerContentScrollView>
     )
-}
+};
+
+
+
 
 
 const Main = () => {
@@ -231,6 +235,50 @@ const Main = () => {
         dispatch(fetchPartners());
         dispatch(fetchComments());
     }, [dispatch]);
+
+
+    // netinfo
+    useEffect(() => {
+        NetInfo.fetch().then((connectionInfo) => {
+            Platform.OS === 'ios'
+                ? Alert.alert(
+                    'Initial Network Connectivity Type: ', 
+                    connectionInfo.type
+                )
+                : ToastAndroid.show(
+                    'Initial Network Connectivity Type: ' + 
+                        connectionInfo.type, 
+                    ToastAndroid.LONG
+                ); //3.5seconds. SHORT 2 sec.
+                //ToastAndroid API has a method show and 2 arguments (text to display as a string, integer number for how long to show the toast)
+        });
+        //subscribe to network changes
+        const unsubscribeNetInfo = NetInfo.addEventListener((connectionInfo) => {
+            handleConnectivityChange(connectionInfo); //this method provides a function that can be used to unsubscribe the listener as its own return value
+        });
+        return unsubscribeNetInfo; //if we return a function from useEffect hook, react will call that function right before the component was defined in gets unmounted
+    }, []);
+
+    const handleConnectivityChange = (connectionInfo) => {
+        let connectionMsg = "You are now connected to an active network.";
+        switch (connectionInfo.type) {
+            case 'none':
+                connectionMsg= 'No network connection is active';
+                break;
+            case 'unknown':
+                connectionMsg = 'The network connection state is now unknown';
+                break;
+            case 'cellular':
+                connectionMsg = 'You are now connected to a cellular network';
+                break;
+            case 'wifi':
+                connectionMsg = 'You are now connected to a WiFi network.';
+                break;
+        }
+        Platform.OS === 'ios'
+            ? Alert.alert ('Connection change: ', connectionMsg)
+            : ToastAndroid.show(connectionMsg, ToastAndroid.LONG);
+    }
 
     return (
         <View
